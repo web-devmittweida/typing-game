@@ -94,4 +94,16 @@ function gameOver() {
     <p>Your final score is ${score}</p>
     <button onclick="location.reload()">Reload</button>
   `;
+  
+   endgameEl.style.display = 'flex';
+}
+
+addWordToDOM();
+
+// Event listeners
+
+// Typing
+text.addEventListener('input', e => {
+  const insertedText = e.target.value;
+
 
