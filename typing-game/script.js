@@ -1,6 +1,7 @@
 const word = document.getElementById('word');
 const text = document.getElementById('text');
 const scoreEl = document.getElementById('score');
+const hiscoreEl = document.getElementById('hiscore');
 const timeEl = document.getElementById('time');
 const endgameEl = document.getElementById('end-game-container');
 const settingsBtn = document.getElementById('settings-btn');
@@ -38,6 +39,9 @@ let randomWord;
 // Init score
 let score = 0;
 
+// Init hiscore
+let hiscore = initializeHiscore();
+
 // Init time
 let time = 10;
 
@@ -73,6 +77,10 @@ function addWordToDOM() {
 // Update score
 function updateScore() {
   score++;
+
+  if (score > hiscore)
+    setHiscore(score);
+
   scoreEl.innerHTML = score;
 }
 
@@ -92,10 +100,23 @@ function gameOver() {
   endgameEl.innerHTML = `
     <h1>Time ran out</h1>
     <p>Your final score is ${score}</p>
-    <button onclick="location.reload()">Reload</button>
+    <p class='end-game-hiscore'>The hi-score is ${hiscore}</p>
+    <button onclick='location.reload()'>Reload</button>
   `;
-  
-   endgameEl.style.display = 'flex';
+
+  endgameEl.style.display = 'flex';
+}
+
+function initializeHiscore() {
+  const hiscore = parseInt(localStorage.getItem('hiscore') ?? 0);
+
+  hiscoreEl.innerHTML = hiscore;
+  return hiscore;
+}
+
+function setHiscore(newScore) {
+  localStorage.setItem('hiscore', newScore);
+  hiscoreEl.innerHTML = newScore;
 }
 
 addWordToDOM();
